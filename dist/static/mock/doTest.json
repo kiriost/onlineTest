@@ -1,0 +1,31 @@
+{
+	"data": {
+		"projectName": "数据库原理与应用",
+		"paperId": 20,
+		"titleList": [
+			{
+				"testTitle": "如果你无法简洁的表达你的想法，那只说明你还不够了解它,如果你无法简洁的表达你的想法，那只说明你还不够了解它。-- 阿尔伯特·爱因斯坦",
+				"testSelectA": "如果你无法简洁的表达你的想法",
+				"testSelectB": "如果你无法简洁的表达你的想法",
+				"testSelectC": "如果你无法简洁的表达你的想法",
+				"testSelectD": "如果你无法简洁的表达你的想法",
+				"testType": 1,
+				"questionNumber": 25
+			},
+			{
+				"testTitle": "那只说明你还不够了解它,如果你无法简洁的表达你的想法，那只说明你还不够了解它。-- 阿尔伯特·爱因斯坦",
+				"testSelectA": "如果你无法简洁的表达你的想法",
+				"testSelectB": "如果你无法简洁的表达你的想法",
+				"testSelectC": "那只说明你还不够了解它",
+				"testSelectD": "如果你无法简洁的表达你的想法",
+				"testType": 2,
+				"questionNumber": 2
+			},
+			{
+				"testTitle": "如果你无法简洁的表达你的想法，那只说明你还不够了解它,如果你无法简洁的表达你的想法，那只说明你还不够了解它。-- 阿尔伯特·爱因斯坦",
+				"testType": 0,
+				"questionNumber": 5
+			}
+		]
+	}
+}

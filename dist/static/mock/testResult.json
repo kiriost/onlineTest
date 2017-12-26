@@ -1,0 +1,39 @@
+{
+   "tableData": [
+    {
+      "studentNumber": "1505120206",
+      "name": "John Smith",
+      "sexType": "男",
+      "subject": "数据库",
+      "score": 90
+    },
+    {
+      "studentNumber": "1505120206",
+      "name": "John Smith",
+      "sexType": "男",
+      "subject": "数据库",
+      "score": 90
+    },
+    {
+      "studentNumber": "1505120206",
+      "name": "John Smith",
+      "sexType": "男",
+      "subject": "数据库",
+      "score": 90
+    },
+    {
+      "studentNumber": "1505120206",
+      "name": "John Smith",
+      "sexType": "男",
+      "subject": "数据库",
+      "score": 90
+    },
+    {
+      "studentNumber": "1505120206",
+      "name": "John Smith",
+      "sexType": "男",
+      "subject": "数据库",
+      "score": 90
+    }
+  ]
+}
