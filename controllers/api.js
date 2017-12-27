@@ -320,7 +320,7 @@ module.exports = {
 
     'POST /api/addTestInfo': async (ctx, next) => {
         //插入考生成绩
-        console.dir(ctx.request.body)
+        //console.dir(ctx.request.body)
         await sql.addTestInfo(ctx.request.body).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
@@ -333,8 +333,34 @@ module.exports = {
 
     'POST /api/judgeIsTest': async (ctx, next) => {
         //查找有无考试
-        console.dir(ctx.request.body)
+        //console.dir(ctx.request.body)
         await sql.judgeIsTest(ctx.request.body).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                tableData: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/deleteTestResultInfo': async (ctx, next) => {
+        //删除考试成绩
+        //console.dir(ctx.request.body)
+        await sql.deleteTestResultInfo(ctx.request.body).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                tableData: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/modifyPw': async (ctx, next) => {
+        //修改管理员密码
+        console.dir(ctx.request.body)
+        await sql.modifyPw(ctx.request.body).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
                 tableData: data

@@ -262,7 +262,7 @@ var deleteJudgeInfo = (data) => {
 
 var getTestResult = (data) => {
     //查询考试结果
-    var getTestResultSql = 'select stu_exam.stu_no,  student.stu_name, subject.sub_name, grade \
+    var getTestResultSql = 'select stu_exam.stu_no,  student.stu_name, subject.sub_name, grade, stu_exam.exam_no\
                             from stu_exam, student, subject \
                             where student.stu_no = stu_exam.stu_no \
                                 and subject.sub_no in ( \
@@ -273,7 +273,7 @@ var getTestResult = (data) => {
     let promise = new Promise((resolve, reject) => {
         pool.getConnection(function(err, connection) {
             connection.query(getTestResultSql, function (error, results, fields) {
-                //console.dir(results)
+                console.dir(results)
                 resolve(results)
                 connection.release();   
                 if (error) throw reject(error);
@@ -595,6 +595,47 @@ var judgeIsTest = (data) => {
     return promise  
 }
 
+var deleteTestResultInfo = (data) => {
+    //删除学生考试信息
+    var deleteTestResultInfo = 'delete from stu_exam where exam_no = ? and stu_no = ?'
+    let promise = new Promise((resolve, reject) => {
+        pool.getConnection(function(err, connection) {
+            connection.query(deleteTestResultInfo, [data.exam_no, data.stu_no], function (error, results, fields) {
+                resolve(results)
+                connection.release();   
+                if (error) throw reject(error);
+          });
+        });  
+    });
+    return promise  
+}
+
+var modifyPw = (data) => {
+    //删除学生考试信息
+    var modifyPw = 'select * from administrator'
+    var updatePw = 'update administrator set admin_pw=? where admin_name="admin"'
+    let promise = new Promise((resolve, reject) => {
+        pool.getConnection(function(err, connection) {
+            connection.query(modifyPw, function (error, results, fields) {
+                if(results[0].admin_pw == data.oldPw){
+                    //原密码匹配
+                    connection.query(updatePw, [data.newPw], function (error, results, fields) {
+                        //更新密码
+                        resolve(1)
+                        if (error) throw reject(error);
+                    });
+                }else{
+                    //密码不正确
+                    resolve(0)
+                }
+                connection.release();   
+                if (error) throw reject(error);
+            });
+        });  
+    });
+    return promise  
+}
+
 
 
 module.exports = {      
@@ -623,5 +664,7 @@ module.exports = {
     getDoTestSelect: getDoTestSelect,
     getDoTestJudge: getDoTestJudge,
     addTestInfo: addTestInfo,
-    judgeIsTest: judgeIsTest
+    judgeIsTest: judgeIsTest,
+    deleteTestResultInfo: deleteTestResultInfo,
+    modifyPw: modifyPw
 };
