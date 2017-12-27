@@ -1,10 +1,3 @@
-/*$ ssh root@47.94.254.3
-root@47.94.254.3's password:
-Beluga2017
-mysql -u root -p mysql -h 127.0.0.1
-
-*/
-
 alter table 表名 convert to charset utf8;
 
 use olexam
