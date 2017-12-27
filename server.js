@@ -2,8 +2,8 @@
 var mysql      = require('mysql');
 var pool  = mysql.createPool({
   localAddress : '127.0.0.1',
-  user     : 'root',
-  password : '123456',
+  user     : '',
+  password : '',
   database : 'olexam',
   connectionLimit : 10
   //charset  : 'gbk'
