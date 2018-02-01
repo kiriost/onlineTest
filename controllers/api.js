@@ -9,215 +9,60 @@ var products = [{
 const sql = require('../server');
 
 module.exports = {
-    'GET /api/getStudentInfo': async (ctx, next) => {
-        //返回学生信息
-        await sql.getStudentInfo().then((data) => {
+    'POST /api/getBookInfo': async (ctx, next) => {
+        //返回书籍信息
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        //console.log('ctx数据', ctx.request.body.pageNumber)
+        await sql.getBookInfo(row, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/addStudentInfo': async (ctx, next) => {
-        //添加学生信息
-        //console.dir(ctx.request.body.addData.stu_name)
-        await sql.addStudentInfo(ctx.request.body.addData).then((data) => {
-            console.dir(data)
+    'POST /api/distinctBookInfo': async (ctx, next) => {
+        //返回筛选后的书籍信息
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let is_show = ctx.request.body.is_show
+        //console.log('ctx数据', ctx.request.body)
+        await sql.distinctBookInfo(row, is_show, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/deleteStudentInfo': async (ctx, next) => {
-        //删除学生信息
-        //console.dir(ctx.request.body.stu_no)
-        await sql.deleteStudentInfo(ctx.request.body.stu_no).then((data) => {
-            console.dir(data)
+     'POST /api/searchBookInfo': async (ctx, next) => {
+        //返回搜索书籍信息
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let field = ctx.request.body.field
+        //console.log('ctx数据', ctx.request.body)
+        await sql.searchBookInfo(row, field, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'GET /api/getRoomInfo': async (ctx, next) => {
-        //返回考场信息
-        await sql.getRoomInfo().then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/addRoomInfo': async (ctx, next) => {
-        //添加考场信息
-        //console.dir(ctx.request.body.addData)
-        await sql.addRoomInfo(ctx.request.body.addData).then((data) => {
-            //console.dir(data)
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-
-    'POST /api/deleteRoomInfo': async (ctx, next) => {
-        //删除考场信息
-        //console.dir(ctx.request.body.room_no)
-        await sql.deleteRoomInfo(ctx.request.body.room_no).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-
-    'POST /api/addSelectPro': async (ctx, next) => {
-        //增加选择题
-        //console.dir(ctx.request.body.room_no)
-        await sql.addSelectPro(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                statuCode: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-
-    'POST /api/addJudgePro': async (ctx, next) => {
-        //增加判断题
-        //console.dir(ctx.request.body.room_no)
-        await sql.addJudgePro(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                statuCode: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'POST /api/getSelectInfo': async (ctx, next) => {
-        //加载数据,两个参数,科目的number和题目number
-        //sub_no, cho_no
-        //cho_no-1时查询所有，
-        //console.dir(ctx.request.body)
-        await sql.getSelectInfo(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'POST /api/getJudgeInfo': async (ctx, next) => {
-        //加载数据,两个参数,科目的number和题目number
-        //sub_no, tf_no
-        //tf_no-1时查询所有，
-        //console.dir(ctx.request.body)
-        await sql.getJudgeInfo(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'POST /api/deleteSelectInfo': async (ctx, next) => {
-        //删除当前选择题
-        //console.dir(ctx.request.body)
-        await sql.deleteSelectInfo(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'POST /api/deleteJudgeInfo': async (ctx, next) => {
-        //删除当前判断题
-        //console.dir(ctx.request.body)
-        await sql.deleteJudgeInfo(ctx.request.body).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'GET /api/getTestResult': async (ctx, next) => {
-        //查询考生考试结果
-        //console.dir(ctx.request.body)
-        await sql.getTestResult().then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'GET /api/getAddTestInfo': async (ctx, next) => {
-        //查询安排的考试
-        //console.dir(ctx.request.body)
-        await sql.getAddTestInfo().then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-    'POST /api/deleteAddTestInfo': async (ctx, next) => {
-        //删除安排的考试
-        console.dir(ctx.request.body)
-        await sql.deleteAddTestInfo(ctx.request.body.exam_no).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-
-    'POST /api/insertAddTestInfo': async (ctx, next) => {
-        //增加安排的考试
-        //console.dir(ctx.request.body.addData)
-        await sql.insertAddTestInfo(ctx.request.body.addData).then((data) => {
-            ctx.response.type = 'application/json';
-            ctx.response.body = {
-                tableData: data
-            }
-        }).catch((data) => {
-            console.dir(data)
-        })
-    },
-
-    'POST /api/stuLogin': async (ctx, next) => {
-        //考生登陆
-        //console.dir(ctx.request.body)
-        await sql.stuLogin(ctx.request.body).then((data) => {
+    'POST /api/deleteBook': async (ctx, next) => {
+        //删除书籍信息
+        //console.log('ctx数据', ctx.request.body)
+        await sql.deleteBook(ctx.request.body.id).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
                 statue: data
@@ -227,10 +72,32 @@ module.exports = {
         })
     },
 
-    'POST /api/manageLogin': async (ctx, next) => {
-        //管理员登陆
-        //console.dir(ctx.request.body)
-        await sql.manageLogin(ctx.request.body).then((data) => {
+    'POST /api/reqChapterInfo': async (ctx, next) => {
+        //返回章节数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let field = ctx.request.body.searchTxt
+        let bookId = ctx.request.body.bookId
+        console.log('ctx数据', ctx.request.body)
+        await sql.reqChapterInfo(row, field, offset, bookId).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/setChapterMoney': async (ctx, next) => {
+        //章节付费免费的更新
+        let id = ctx.request.body.id
+        let chapter_type = ctx.request.body.chapter_type
+        let chapter_money = ctx.request.body.chapter_money
+        //console.log('ctx数据', ctx.request.body)
+        //console.log('id数据类型', typeof(ctx.request.body.id), typeof(ctx.request.body.chapter_type), typeof(ctx.request.body.chapter_money))
+        await sql.setChapterMoney(id, chapter_type, chapter_money).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
                 statue: data
@@ -240,134 +107,271 @@ module.exports = {
         })
     },
 
-    'POST /api/register': async (ctx, next) => {
-        //注册
-        console.dir(ctx.request.body)
-        await sql.register(ctx.request.body.addData).then((data) => {
+    'POST /api/distinctChapterInfo': async (ctx, next) => {
+        //返回章节数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let chapter_type = ctx.request.body.chapter_type
+        let bookId = ctx.request.body.bookId
+        console.log('ctx数据', ctx.request.body)
+        await sql.distinctChapterInfo(row, chapter_type, offset, bookId).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                insertId: data.insertId
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/getNowStudentInfo': async (ctx, next) => {
-        //返回当前学生信息
-        //console.dir(ctx.request.body)
-        await sql.getNowStudentInfo(ctx.request.body.stu_no).then((data) => {
+    'POST /api/deleteChapter': async (ctx, next) => {
+        //删除书籍信息
+        //console.log('ctx数据', ctx.request.body)
+        await sql.deleteChapter(ctx.request.body.id).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                statue: data
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/getMyTestResult': async (ctx, next) => {
-        //返回当前学生考试成绩
-        //console.dir(ctx.request.body)
-        await sql.getMyTestResult(ctx.request.body.stu_no).then((data) => {
+    'POST /api/changeShow': async (ctx, next) => {
+        //返回更新书籍状态
+        let id = ctx.request.body.id
+        let is_show = ctx.request.body.is_show
+        //console.log('ctx数据', ctx.request.body)
+        //console.log('id数据类型', typeof(ctx.request.body.id))
+        await sql.changeShow(id, is_show).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                statue: data
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/getDoTestPro': async (ctx, next) => {
-        //返回当前考试名
-        //console.dir(ctx.request.body)
-        await sql.getDoTestPro(ctx.request.body.exam_no).then((data) => {
+    'POST /api/reqAllBookStatistic': async (ctx, next) => {
+        //返回书籍统计数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let field = ctx.request.body.searchTxt
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqAllBookStatistic(row, field, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                project: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/getDoTestSelect': async (ctx, next) => {
-        //返回当前选择题列表
-        //console.dir(ctx.request.body)
-        await sql.getDoTestSelect(ctx.request.body.exam_no).then((data) => {
+    'POST /api/reqComment': async (ctx, next) => {
+        //返回评论数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let field = ctx.request.body.searchTxt
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqComment(row, field, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/getDoTestJudge': async (ctx, next) => {
-        //返回当前判断题列表
-        //console.dir(ctx.request.body)
-        await sql.getDoTestJudge(ctx.request.body.exam_no).then((data) => {
+    'POST /api/updateTop': async (ctx, next) => {
+        //更新评论数据
+        let id = ctx.request.body.id
+        let type = ctx.request.body.type
+        //console.log('ctx数据', ctx.request.body)
+        //console.log('id数据类型', typeof(ctx.request.body.id))
+        await sql.updateTop(id, type).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                statue: data
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/addTestInfo': async (ctx, next) => {
-        //插入考生成绩
-        //console.dir(ctx.request.body)
-        await sql.addTestInfo(ctx.request.body).then((data) => {
+    'POST /api/deleteComment': async (ctx, next) => {
+        //删除评论数据
+        let id = ctx.request.body.id
+        //console.log('ctx数据', ctx.request.body)
+        await sql.deleteComment(id).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                statue: data
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/judgeIsTest': async (ctx, next) => {
-        //查找有无考试
-        //console.dir(ctx.request.body)
-        await sql.judgeIsTest(ctx.request.body).then((data) => {
+    'POST /api/reqUser': async (ctx, next) => {
+        //返回用户数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let field = ctx.request.body.searchTxt
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqUser(row, field, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/deleteTestResultInfo': async (ctx, next) => {
-        //删除考试成绩
-        //console.dir(ctx.request.body)
-        await sql.deleteTestResultInfo(ctx.request.body).then((data) => {
+    'POST /api/reqUserSubscribe': async (ctx, next) => {
+        //返回用户订阅书籍数据
+        let row = ctx.request.body.pageNumber
+        let offset = 10
+        let id = ctx.request.body.userId
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqUserSubscribe(row, id, offset).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                tableData: data.tableData,
+                allPageNum: data.allPageNum
             }
         }).catch((data) => {
             console.dir(data)
         })
     },
 
-    'POST /api/modifyPw': async (ctx, next) => {
-        //修改管理员密码
-        console.dir(ctx.request.body)
-        await sql.modifyPw(ctx.request.body).then((data) => {
+    'POST /api/deleteUser': async (ctx, next) => {
+        //删除用户数据
+        let id = ctx.request.body.id
+        console.log('ctx数据', ctx.request.body)
+        await sql.deleteUser(id).then((data) => {
             ctx.response.type = 'application/json';
             ctx.response.body = {
-                tableData: data
+                statue: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/reqBookDetails': async (ctx, next) => {
+        //返回书籍详情信息
+        let id = ctx.request.body.id
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqBookDetails(id).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                resultData: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/insertBookDetails': async (ctx, next) => {
+        //返回书籍详情信息
+        let info = ctx.request.body.info
+        //console.log('ctx数据', ctx.request.body)
+        await sql.insertBookDetails(info).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                id: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/updateBookDetails': async (ctx, next) => {
+        //更新书籍详情信息
+        let info = ctx.request.body.info
+        let id = ctx.request.body.id
+        //console.log('ctx数据', ctx.request.body)
+        await sql.updateBookDetails(info, id).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                statue: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/reqChapterId': async (ctx, next) => {
+        //取得章节的id
+        let bookId = ctx.request.body.bookId
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqChapterId(bookId).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                chapter_id: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/insertChapterContant': async (ctx, next) => {
+        //插入章节内容
+        //console.log('ctx数据', ctx.request.body)
+        await sql.insertChapterContant(ctx.request.body).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                statue: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/reqChapterContant': async (ctx, next) => {
+        //请求章节内容
+        //console.log('ctx数据', ctx.request.body)
+        await sql.reqChapterContant(ctx.request.body).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                data: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/updateChapterContent': async (ctx, next) => {
+        //更新章节内容
+        //console.log('ctx数据', ctx.request.body)
+        await sql.updateChapterContent(ctx.request.body).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                statue: data
+            }
+        }).catch((data) => {
+            console.dir(data)
+        })
+    },
+
+    'POST /api/insertManyChapter': async (ctx, next) => {
+        //批量上传
+        //console.log('ctx数据', ctx.request.body)
+        await sql.insertManyChapter(ctx.request.body.resultInfo).then((data) => {
+            ctx.response.type = 'application/json';
+            ctx.response.body = {
+                statue: data
             }
         }).catch((data) => {
             console.dir(data)
         })
     }
-
 }

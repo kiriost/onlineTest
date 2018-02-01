@@ -23,5 +23,5 @@ app.use(bodyParser());
 app.use(controller());
 app.use(serve(__dirname + '/dist'));
 
-app.listen(3000);
-console.log('app started at port 3000...');
+app.listen(3001);
+console.log('app started at port 3001...');
